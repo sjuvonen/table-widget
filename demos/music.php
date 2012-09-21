@@ -68,7 +68,7 @@ $table->getFooter()
 $table->setSortable(true);
 $table->setColumns($columns)->setData($data);
 
-$table->setWidth('id', 30)->setWidth('age', 40);
+$table->setWidth('id', 30);
 
 $table->before(function($row, $table) use ($column) {
     static $char = '';
