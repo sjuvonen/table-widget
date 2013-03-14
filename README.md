@@ -12,30 +12,29 @@ your module's autoloader configuration and also define the view helper in module
 Example Module::getAutoloaderConfig():
 
     public function getAutoloaderConfig() {
-    		return array(
-    				'Zend\Loader\ClassMapAutoloader' => array(
-    						array(),
-    				),
-    				'Zend\Loader\StandardAutoloader' => array(
-    						'namespaces' => array(
-    								__NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-    
+            return array(
+                    'Zend\Loader\ClassMapAutoloader' => array(
+                            array(),
+                    ),
+                    'Zend\Loader\StandardAutoloader' => array(
+                            'namespaces' => array(
+                                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+
                     // Simply add this row:
-    								'Samu' => __DIR__ . '/src/Samu',
-    						),
-    				),
-    		);
+                                    'Samu' => __DIR__ . '/src/Samu',
+                            ),
+                    ),
+            );
     }
 
 module.config.php:
 
     return array(
         'view_helpers' => array(
-            ...
-            'Table' => 'Samu\Zend\Table',
-	    	),
-
-        ...
+            'invokables' => array(
+                'Table' => 'Samu\Zend\Table',
+            ),
+        ),
     );
 
 Then in your view template you can access the view helper by simply calling $this->table().
