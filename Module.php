@@ -1,6 +1,6 @@
 <?php
 
-namespace Samu;
+namespace SamuTable;
 
 class Module {
     public function getAutoloaderConfig() {
