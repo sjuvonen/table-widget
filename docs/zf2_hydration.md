@@ -43,5 +43,6 @@ class Module {
         });
     }
 }
+```
 
 **NOTE** The factory will be called only once for each instance (of the table)! The class name that is passed to the hydrator is deduced from the first row of the result set. This is important to remember when the result is not homogenous.
