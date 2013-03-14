@@ -55,7 +55,7 @@ $artists = array_unique(array_map(function($row) { return $row['artist']; }, $da
 
 sort_data($data, $column, $direction);
 
-$table = new Samu\Widget\Table();
+$table = new Samu\Widget\Table\Table();
 
 $table->getHeader()
     ->setUrlPrototype('?s=:column,:direction')

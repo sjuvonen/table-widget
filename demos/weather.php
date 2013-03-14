@@ -40,7 +40,7 @@ $data = array(
     ),
 );
 
-$table = new Samu\Widget\Table();
+$table = new Samu\Widget\Table\Table();
 $table->setCaption('Weather');
 $table->setIndexes(array('weather', 'temp'));
 $table->setData($data);
