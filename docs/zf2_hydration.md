@@ -17,7 +17,7 @@ use Zend\Stdlib\Hydrator\ClassMethods as ZendHydrator;
 
 class Module {
     public function onBootstrap($e) {
-        \Samu\Zend\Table\Table::setHydratorFactory(function($class) {
+        \Samu\Zend\Table\Table::setDefaultHydratorFactory(function($class) {
             // Use the same hydrator for all classes
             return ZendHydrator();
         });
@@ -36,7 +36,7 @@ class Module {
     public function onBootstrap($e) {
         $sm = $e->getApplication()->getServiceManager();
 
-        \Samu\Zend\Table\Table::setHydratorFactory(function($class) use ($sm) {
+        \Samu\Zend\Table\Table::setDefaultHydratorFactory(function($class) use ($sm) {
             $em = $sm->get('Doctrine\ORM\EntityManager');
             $hydrator = new DoctrineHydrator($em, $class);
             return $hydrator;
