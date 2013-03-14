@@ -1,6 +1,6 @@
 <?php
 
-namespace Samu\Widget;
+namespace Samu\Widget\Table;
 
 use Samu\Widget\Table\TableColumn;
 use Samu\Widget\Table\TableHeader;
@@ -14,7 +14,6 @@ use Samu\Widget\Table\TableRow;
  * the Traversable interface.
  **/
 class Table {
-
     private $data;
     private $columns;
     private $header;
@@ -35,9 +34,7 @@ class Table {
 
     public function __toString() {
         ob_start();
-
         $this->render();
-
         return ob_get_clean();
     }
 
@@ -57,13 +54,13 @@ class Table {
             <?php if ($this->getCaption()): ?>
                 <caption><?= htmlspecialchars($this->getCaption()) ?></caption>
             <?php endif ?>
-            
+
             <?= $this->getHeader() ?>
             <?= $this->getFooter() ?>
 
             <tbody>
                 <?php foreach ($this->getData() as $i => $row): ?>
-                    <?= $row_helper->render($row, $i) ?>
+                    <?= $row_helper->render($this->extractData($row), $i) ?>
                 <?php endforeach ?>
             </tbody>
         </table>
@@ -188,12 +185,12 @@ class Table {
         if (!is_array($data) && !($data instanceof \Traversable)) {
             throw new \Exception('Invalid data passed');
         }
-        
+
         $this->data = $data;
 
         if (count($this->getColumns()) == 0 && count($data)) {
             $row = current($data);
-            $cols = array_keys($row);
+            $cols = array_keys($this->extractData($row));
             $cols = array_combine($cols, array_fill(0, count($cols), ''));
 
             $this->setColumns($cols);
@@ -225,7 +222,7 @@ class Table {
         if (!$this->footer) {
             $this->footer = new TableFooter($this);
         }
-        
+
         return $this->footer;
     }
 
@@ -265,7 +262,7 @@ class Table {
             if (!is_null($label)) {
                 $this->getHeader()->setLabel($i, $label);
             }
-            
+
             $this->columns[$i] = new TableColumn($defs, $this);
         }
 
@@ -299,4 +296,15 @@ class Table {
         return $this;
     }
 
+    protected function extractData($row) {
+        if (is_object($row)) {
+            $row = get_object_vars($row);
+        }
+
+        if (is_array($row)) {
+            return $row;
+        }
+
+        throw new \Exception("Invalid data passed");
+    }
 }

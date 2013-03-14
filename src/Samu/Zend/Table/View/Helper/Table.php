@@ -1,6 +1,6 @@
 <?php
 
-namespace Samu\Zend;
+namespace Samu\Zend\Table\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
@@ -16,7 +16,7 @@ class Table extends AbstractHelper {
      * @return \Samu\Widget\Table
      **/
     public function __invoke($data = null, $columns = null, $index_only = false) {
-        $table = new \Samu\Widget\Table();
+        $table = new \Samu\Zend\Table\Table();
 
         if ($columns) {
             if ($index_only) {

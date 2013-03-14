@@ -10,10 +10,10 @@ abstract class TablePrimitive {
     private $is_visible;
 
     private $attrs;
-    
+
     abstract public function render();
 
-    public function __construct(\Samu\Widget\Table $table) {
+    public function __construct(Table $table) {
         $this->table = $table;
         $this->is_visible = false;
         $this->attrs = array(

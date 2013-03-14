@@ -20,7 +20,7 @@ class TableHeader extends TablePrimitive {
     private $sort_column;
     private $sort_direction = self::SORT_ASCENDING;
 
-    public function __construct(\Samu\Widget\Table $table) {
+    public function __construct(Table $table) {
         parent::__construct($table);
 
         $this->callbacks = array();
@@ -58,7 +58,7 @@ class TableHeader extends TablePrimitive {
 
                     $span = $this->getSpan($i);
                     $label = $this->getLabel($i);
-                    
+
                     $colspan = $span > 1 ? " colspan=\"{$span}\"" : '';
                     $classes = array(is_numeric($i) ? 'col-' . $i : $i);
 

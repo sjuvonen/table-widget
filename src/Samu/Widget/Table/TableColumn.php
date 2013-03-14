@@ -15,7 +15,7 @@ class TableColumn extends TablePrimitive {
     private $before;
     private $after;
 
-    public function __construct($defs, \Samu\Widget\Table $table) {
+    public function __construct($defs, Table $table) {
         parent::__construct($table);
 
         $this->setVisible(true);
