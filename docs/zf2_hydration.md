@@ -25,7 +25,7 @@ class Module {
 }
 ```
 
-Here's an extended example demonstrating using hydrators with Doctrine (requires DoctrineModule):
+Here's an extended example demonstrating usage of hydrators with Doctrine (requires DoctrineModule):
 
 ```php
 namespace MyModule;
