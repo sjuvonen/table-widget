@@ -71,7 +71,7 @@ class TableFooter extends TablePrimitive {
      *
      * @return TableFooter
      **/
-    public function setContent($i, $content) {
+    public function setContent($i, $content = '') {
         $this->setVisible(true);
 
         if (func_num_args() == 1) {
