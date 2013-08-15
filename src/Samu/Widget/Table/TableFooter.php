@@ -14,11 +14,8 @@ class TableFooter extends TablePrimitive {
         if (!$this->isVisible()) {
             return;
         }
-
         $span = 1;
-
         ?>
-
         <tfoot>
             <tr>
                 <?php if ($this->isUnified()): ?>
@@ -42,9 +39,8 @@ class TableFooter extends TablePrimitive {
                         <?php endif ?>
                     <?php endforeach ?>
                 <?php endif ?>
-            <tr>
+            </tr>
         </tfoot>
-
         <?php
     }
 
@@ -75,7 +71,7 @@ class TableFooter extends TablePrimitive {
         $this->setVisible(true);
 
         if (func_num_args() == 1) {
-            $this->content = $content;
+            $this->content = $i;
         } else {
             $this->content[$i] = $content;
         }
