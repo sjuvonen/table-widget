@@ -123,14 +123,17 @@ class Table {
 
     public function setId($id) {
         $this->id = $id;
+        return $this;
     }
 
     public function setClass($class) {
         $this->classes = array($class);
+        return $this;
     }
 
     public function setClasses($classes) {
         $this->classes = $classes;
+        return $this;
     }
 
     public function getClasses() {
@@ -162,7 +165,6 @@ class Table {
      **/
     public function setCaption($caption) {
         $this->caption = $caption;
-
         return $this;
     }
 
