@@ -2,6 +2,7 @@
 
 namespace Samu\Widget\Table;
 
+use Exception;
 use Samu\Widget\Table\TableColumn;
 use Samu\Widget\Table\TableHeader;
 use Samu\Widget\Table\TableFooter;
@@ -33,9 +34,13 @@ class Table {
     }
 
     public function __toString() {
-        ob_start();
-        $this->render();
-        return ob_get_clean();
+        try {
+            ob_start();
+            $this->render();
+            return ob_get_clean();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
