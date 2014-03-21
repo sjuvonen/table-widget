@@ -26,7 +26,7 @@ class TableRow extends TablePrimitive {
 
         <tr>
             <?php foreach ($this->getTable()->getColumns() as $i => $col): ?>
-                <?= $col->render($row[$i], $i, $row_i, $row) ?>
+                <?= $col->render(isset($row[$i]) ? $row[$i] : null, $i, $row_i, $row) ?>
             <?php endforeach ?>
         </tr>
 
