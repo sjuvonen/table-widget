@@ -64,9 +64,7 @@ class Table {
             <?= $this->getFooter() ?>
 
             <tbody>
-                <?php foreach ($this->getData() as $i => $row): ?>
-                    <?= $row_helper->render($this->extractData($row), $i) ?>
-                <?php endforeach ?>
+                <?= $this->renderRows() ?>
             </tbody>
         </table>
 
@@ -89,7 +87,6 @@ class Table {
         if ($c = $this->getColumn($i)) {
             $c->transform($callback);
         }
-
         return $this;
     }
 
@@ -106,7 +103,6 @@ class Table {
      **/
     public function before($callback) {
         $this->before = $callback;
-
         return $this;
     }
 
@@ -118,7 +114,12 @@ class Table {
      **/
     public function after($callback) {
         $this->after = $callback;
+        return $this;
+    }
 
+    public function ifEmpty($text_or_callback)
+    {
+        $this->if_empty = $text_or_callback;
         return $this;
     }
 
@@ -313,5 +314,26 @@ class Table {
         }
 
         throw new \Exception("Invalid data passed");
+    }
+
+    protected function renderRows()
+    {
+        $row_helper = new TableRow($this);
+        $row_helper->before($this->before);
+        $row_helper->after($this->after);
+        $data = $this->getData();
+        if (count($data) > 0) {
+            foreach ($this->getData() as $i => $row) {
+                $row_helper->render($this->extractData($row), $i);
+            }
+        } else {
+            ?>
+            <tr>
+                <td colspan="<?= count($this->columns) ?>">
+                    <?= htmlspecialchars($this->if_empty) ?>
+                </td>
+            </tr>
+            <?php
+        }
     }
 }

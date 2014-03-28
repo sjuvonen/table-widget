@@ -6,7 +6,6 @@ namespace Samu\Widget\Table;
  * Helper for rendering table row
  **/
 class TableRow extends TablePrimitive {
-
     private $before;
     private $after;
 
@@ -23,13 +22,11 @@ class TableRow extends TablePrimitive {
         }
 
         ?>
-
         <tr>
             <?php foreach ($this->getTable()->getColumns() as $i => $col): ?>
                 <?= $col->render(isset($row[$i]) ? $row[$i] : null, $i, $row_i, $row) ?>
             <?php endforeach ?>
         </tr>
-
         <?php
     }
 
@@ -44,7 +41,6 @@ class TableRow extends TablePrimitive {
         }
 
         $this->before = $callback;
-
         return $this;
     }
 
@@ -59,7 +55,6 @@ class TableRow extends TablePrimitive {
         }
 
         $this->after = $callback;
-
         return $this;
     }
 
@@ -82,5 +77,4 @@ class TableRow extends TablePrimitive {
     public function getIndex() {
         return $this->row_index;
     }
-
 }
