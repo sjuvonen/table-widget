@@ -20,6 +20,7 @@ class Table {
     private $header;
     private $footer;
     private $caption;
+    private $if_empty = 'No data';
 
     private $before;
     private $after;
