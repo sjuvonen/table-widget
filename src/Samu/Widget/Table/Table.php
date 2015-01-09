@@ -92,6 +92,24 @@ class Table {
     }
 
     /**
+     * Install a callback into a column.
+     *
+     * The callback can be used to manipulate the values in the column.
+     * This callback is intended for simple manipulations that are automaticly
+     * made HTML-safe.
+     *
+     * Callback should return a string value.
+     *
+     * @return Table
+     **/
+    public function alter($i, $callback) {
+        if ($c = $this->getColumn($i)) {
+            $c->alter($callback);
+        }
+        return $this;
+    }
+
+    /**
      * Installs a callback that will be called before a row is rendered.
      *
      * Callback will receive two parameters:

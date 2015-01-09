@@ -11,7 +11,8 @@ class TableColumn extends TablePrimitive {
 
     private $spans;
 
-    private $callback;
+    private $transform_func;
+    private $alter_func;
     private $before;
     private $after;
 
@@ -37,8 +38,11 @@ class TableColumn extends TablePrimitive {
 
         self::$spanned = $this->getSpan($row_i);
 
-        if ($this->callback) {
-            $value = call_user_func($this->callback, $value, $col_i, $row);
+        if ($this->transform_func) {
+            $value = call_user_func($this->transform_func, $value, $col_i, $row);
+        } elseif ($this->alter_func) {
+            $value = call_user_func($this->alter_func, $value, $col_i, $row);
+            $value = htmlspecialchars($value);
         } else {
             $value = htmlspecialchars($value);
         }
@@ -66,9 +70,16 @@ class TableColumn extends TablePrimitive {
         if (!is_null($callback) && !is_callable($callback)) {
             throw new \Exception('Invalid callback passed');
         }
+        $this->transform_func = $callback;
+        return $this;
+    }
 
-        $this->callback = $callback;
-
+    public function alter($callback)
+    {
+        if (!is_null($callback) && !is_callable($callback)) {
+            throw new \Exception('Invalid callback passed');
+        }
+        $this->alter_func = $callback;
         return $this;
     }
 
