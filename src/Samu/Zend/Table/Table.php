@@ -42,17 +42,18 @@ class Table extends BaseTable {
     }
 
     protected function extractData($row) {
-        $h = $this->hydrator;
-        $f = $this->factory;
+        $hydrator = $this->hydrator;
+        $factory = $this->factory;
+        $fields = array_keys($this->getColumns());
 
         if (is_object($row)) {
-            if (!$h && $f) {
-                $h = call_user_func($f, get_class($row));
-                $this->setHydrator($h);
+            if (!$hydrator && $factory) {
+                $hydrator = call_user_func($factory, get_class($row), $fields);
+                $this->setHydrator($hydrator);
             }
 
-            if ($h) {
-                $data = $h->extract($row);
+            if ($hydrator) {
+                $data = $hydrator->extract($row);
                 return $data;
             }
         }

@@ -15,8 +15,8 @@ use Samu\Widget\Table\TableRow;
  * the Traversable interface.
  **/
 class Table {
-    private $data;
-    private $columns;
+    private $data = [];
+    private $columns = [];
     private $header;
     private $footer;
     private $caption;
@@ -26,13 +26,7 @@ class Table {
     private $after;
 
     private $id;
-    private $classes;
-
-    public function __construct() {
-        $this->data = array();
-        $this->columns = array();
-        $this->classes = array();
-    }
+    private $classes = [];
 
     public function __toString() {
         try {
@@ -209,14 +203,15 @@ class Table {
      * @return Table
      **/
     public function setData($data) {
-        if (!is_array($data) && !($data instanceof \Traversable)) {
+        if (!is_array($data) && !($data instanceof \Traversable) && !($data instanceof \IteratorAggregate)) {
             throw new \Exception('Invalid data passed');
         }
 
         $this->data = $data;
 
-        if (count($this->getColumns()) == 0 && count($data)) {
+        if (is_array($data) && count($this->getColumns()) == 0 && count($data)) {
             $row = current($data);
+
             $cols = array_keys($this->extractData($row));
             $cols = array_combine($cols, array_fill(0, count($cols), ''));
 
@@ -277,7 +272,7 @@ class Table {
      * @return Table
      **/
     public function setColumns($columns) {
-        $this->columns = array();
+        $this->columns = [];
 
         foreach ($columns as $i => $defs) {
             if (!is_array($defs)) {
@@ -297,10 +292,10 @@ class Table {
     }
 
     public function setIndexes($indexes) {
-        $this->columns = array();
+        $this->columns = [];
 
         foreach ($indexes as $i) {
-            $this->columns[$i] = new TableColumn(array(), $this);
+            $this->columns[$i] = new TableColumn([], $this);
         }
 
         return $this;
