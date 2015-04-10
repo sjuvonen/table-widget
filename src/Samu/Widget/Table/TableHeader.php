@@ -4,7 +4,7 @@ namespace Samu\Widget\Table;
 
 /**
  * Header for the table
- **/
+ */
 class TableHeader extends TablePrimitive {
 
     const SORT_ASCENDING = 'asc';
@@ -63,8 +63,8 @@ class TableHeader extends TablePrimitive {
                     $classes = array(is_numeric($i) ? 'col-' . $i : $i);
 
                     if ($i == $this->getSortColumn()) {
-                        $classes[] = 'sorted';
-                        $classes[] = $this->getSortDirection();
+                        $classes[] = 'sort-active';
+                        $classes[] = 'sort-' . $this->getSortDirection();
                     }
 
                     if (isset($this->callbacks[$i])) {
@@ -118,7 +118,7 @@ class TableHeader extends TablePrimitive {
      * Return a label for given column
      *
      * @return string
-     **/
+     */
     public function getLabel($i) {
         return $this->labels[$i];
     }
@@ -127,7 +127,7 @@ class TableHeader extends TablePrimitive {
      * Set a label for given column
      *
      * @return TableHeader
-     **/
+     */
     public function setLabel($i, $label) {
         $this->setVisible(true);
         $this->labels[$i] = $label;
@@ -139,7 +139,7 @@ class TableHeader extends TablePrimitive {
      * Return colspan for given header section
      *
      * @return int (1-n)
-     **/
+     */
     public function getSpan($i) {
         return isset($this->spans[$i]) ? $this->spans[$i] : 1;
     }
@@ -148,7 +148,7 @@ class TableHeader extends TablePrimitive {
      * Set colspan for given header section
      *
      * @return TableHeader
-     **/
+     */
     public function setSpan($i, $width) {
         $this->spans[$i] = max($width, 1);
 
@@ -159,7 +159,7 @@ class TableHeader extends TablePrimitive {
      * Set column width
      *
      * @return TableHeader
-     **/
+     */
     public function setWidth($i, $width) {
         $this->widths[$i] = $width;
     }
@@ -168,7 +168,7 @@ class TableHeader extends TablePrimitive {
      * Return sorting state for given column
      *
      * @return bool
-     **/
+     */
     public function isSortable($i) {
         if (!is_array($this->is_sortable)) {
             return (bool)$this->is_sortable;
@@ -181,11 +181,14 @@ class TableHeader extends TablePrimitive {
      * Set sort state for the given column (or all of them)
      *
      * @return TableHeader
-     **/
+     */
     public function setSortable($i, $state = null) {
         if (func_num_args() == 1) {
             $this->is_sortable = (bool)$i;
         } else {
+            if (!is_array($this->is_sortable)) {
+                $this->is_sortable = [];
+            }
             $this->is_sortable[$i] = (bool)$state;
         }
 
@@ -194,7 +197,7 @@ class TableHeader extends TablePrimitive {
 
     /**
      * Return the URL prototype used for sorting
-     **/
+     */
     public function getUrlPrototype() {
         return $this->url_prototype;
     }
@@ -203,11 +206,11 @@ class TableHeader extends TablePrimitive {
      * Set the URL prototype used for sorting
      *
      * The prototype should contain the following placeholders:
-     * - :direction (sort direction)
-     * - :column (sort column)
+     *   :direction (sort direction)
+     *   :column (sort column)
      *
      * @return TableHeader
-     **/
+     */
     public function setUrlPrototype($url) {
         $this->url_prototype = $url;
 
@@ -218,7 +221,7 @@ class TableHeader extends TablePrimitive {
      * Install a callback for transforming the header section value
      *
      * @return TableHeader
-     **/
+     */
     public function transform($i, $callback) {
         if (!is_callable($callback)) {
             throw new \Exception('Invalid callback passed');
@@ -233,7 +236,7 @@ class TableHeader extends TablePrimitive {
      * Return current sort column or NULL if nothing is setCaption
      *
      * @return column index | NULL
-     **/
+     */
     public function getSortColumn() {
         return $this->sort_column;
     }
@@ -242,7 +245,7 @@ class TableHeader extends TablePrimitive {
      * Set sort column
      *
      * @return TableHeader
-     **/
+     */
     public function setSortColumn($col) {
         $this->sort_column = $col;
 
@@ -255,7 +258,7 @@ class TableHeader extends TablePrimitive {
      * Default is 'asc' for ascending
      *
      * @return asc | desc
-     **/
+     */
     public function getSortDirection() {
         return $this->sort_direction;
     }
@@ -266,7 +269,7 @@ class TableHeader extends TablePrimitive {
      * Allowed values are 'asc' and 'desc'
      *
      * @return TableHeader
-     **/
+     */
     public function setSortDirection($dir) {
         $this->sort_direction = $dir;
 

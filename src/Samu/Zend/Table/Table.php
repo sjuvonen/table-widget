@@ -7,41 +7,50 @@ use Samu\Widget\Table\Table as BaseTable;
 
 /**
  * ZF2-compatible version of the generic Table widget
- **/
-class Table extends BaseTable {
+ */
+class Table extends BaseTable
+{
     private static $default_factory;
     private $factory;
     private $hydrator;
 
-    public static function setDefaultHydratorFactory($callable) {
+    public static function setDefaultHydratorFactory($callable)
+    {
         self::$default_factory = $callable;
     }
 
-    public static function getDefaultHydratorFactory() {
+    public static function getDefaultHydratorFactory()
+    {
         return self::$default_factory;
     }
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->factory = static::getDefaultHydratorFactory();
     }
 
-    public function setHydratorFactory($callable) {
+    public function setHydratorFactory($callable)
+    {
         $this->factory = $callable;
     }
 
-    public function getHydratorFactory() {
+    public function getHydratorFactory()
+    {
         return $this->factory;
     }
 
-    public function setHydrator(HydratorInterface $hydrator) {
+    public function setHydrator(HydratorInterface $hydrator)
+    {
         $this->hydrator = $hydrator;
     }
 
-    public function getHydrator() {
+    public function getHydrator()
+    {
         return $this->hydrator;
     }
 
-    protected function extractData($row) {
+    protected function extractData($row)
+    {
         $hydrator = $this->hydrator;
         $factory = $this->factory;
         $fields = array_keys($this->getColumns());

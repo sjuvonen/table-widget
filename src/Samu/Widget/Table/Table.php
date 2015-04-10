@@ -13,7 +13,7 @@ use Samu\Widget\Table\TableRow;
  *
  * Inserted data can be a regular array or anything that implements
  * the Traversable interface.
- **/
+ */
 class Table {
     private $data = [];
     private $columns = [];
@@ -40,7 +40,7 @@ class Table {
 
     /**
      * Renders the table as HTML
-     **/
+     */
     public function render() {
         $row_helper = new TableRow($this);
         $row_helper->before($this->before);
@@ -77,7 +77,7 @@ class Table {
      * Callback should return a string value.
      *
      * @return Table
-     **/
+     */
     public function transform($i, $callback) {
         if ($c = $this->getColumn($i)) {
             $c->transform($callback);
@@ -95,7 +95,7 @@ class Table {
      * Callback should return a string value.
      *
      * @return Table
-     **/
+     */
     public function alter($i, $callback) {
         if ($c = $this->getColumn($i)) {
             $c->alter($callback);
@@ -113,7 +113,7 @@ class Table {
      * Callback may print HTML, return value is ignored.
      *
      * @return Table
-     **/
+     */
     public function before($callback) {
         $this->before = $callback;
         return $this;
@@ -124,7 +124,7 @@ class Table {
      *
      * @see before($callback)
      * @return Table
-     **/
+     */
     public function after($callback) {
         $this->after = $callback;
         return $this;
@@ -165,7 +165,7 @@ class Table {
      * Shorthand for getHeader()->setWidth($i, $width)
      *
      * @return Table
-     **/
+     */
     public function setWidth($i, $width) {
         $this->getHeader()->setWidth($i, $width);
         return $this;
@@ -181,7 +181,7 @@ class Table {
      * Caption is rendered as <caption> element
      *
      * @return Table
-     **/
+     */
     public function setCaption($caption) {
         $this->caption = $caption;
         return $this;
@@ -201,7 +201,7 @@ class Table {
      * every column in the data set is displayed in the order of appearance.
      *
      * @return Table
-     **/
+     */
     public function setData($data) {
         if (!is_array($data) && !($data instanceof \Traversable) && !($data instanceof \IteratorAggregate)) {
             throw new \Exception('Invalid data passed');
@@ -226,7 +226,7 @@ class Table {
      * Return the header object
      *
      * @return TableHeader
-     **/
+     */
     public function getHeader() {
         if (!$this->header) {
             $this->header = new TableHeader($this);
@@ -239,7 +239,7 @@ class Table {
      * Return the footer object
      *
      * @return TableFooter
-     **/
+     */
     public function getFooter() {
         if (!$this->footer) {
             $this->footer = new TableFooter($this);
@@ -252,7 +252,7 @@ class Table {
      * Return the column objects as an associative array
      *
      * @return array
-     **/
+     */
     public function getColumns() {
         return $this->columns;
     }
@@ -261,7 +261,7 @@ class Table {
      * Return the column corresponding to given index
      *
      * @return TableColumn
-     **/
+     */
     public function getColumn($i) {
         return isset($this->columns[$i]) ? $this->columns[$i] : null;
     }
@@ -270,7 +270,7 @@ class Table {
      * Define the columns as an associative array
      *
      * @return Table
-     **/
+     */
     public function setColumns($columns) {
         $this->columns = [];
 
@@ -307,14 +307,34 @@ class Table {
      * Shorthand for getHeader()->setSortable($i, $state)
      *
      * @return Table
-     **/
+     */
     public function setSortable($i, $state = null) {
-        if (func_num_args() == 1) {
-            $this->getHeader()->setSortable($i);
-        } else {
-            $this->getHeader()->setSortable($i, $state);
-        }
+        call_user_func_array([$this->getHeader(), 'setSortable'], func_get_args());
+        return $this;
+    }
 
+    /**
+     * Convenience function for setting the URL prototype that'll be used with
+     * changing sorting of data.
+     *
+     * Available placeholders:
+     *   :column (sort column)
+     *   :direction (sort direction)
+     */
+    public function setUrlPrototype($url)
+    {
+        $this->getHeader()->setUrlPrototype($url);
+        return $this;
+    }
+
+    /**
+     * Convenience function for setting sorting
+     */
+    public function setSorting($column, $direction)
+    {
+        $this->getHeader()
+            ->setSortColumn($column)
+            ->setSortDirection($direction);
         return $this;
     }
 
