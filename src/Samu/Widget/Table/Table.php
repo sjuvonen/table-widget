@@ -274,21 +274,26 @@ class Table {
     public function setColumns($columns) {
         $this->columns = [];
 
-        foreach ($columns as $i => $defs) {
-            if (!is_array($defs)) {
-                $label = $defs;
-            } else {
-                $label = isset($defs['label']) ? $defs['label'] : null;
-            }
-
-            if (!is_null($label)) {
-                $this->getHeader()->setLabel($i, $label);
-            }
-
-            $this->columns[$i] = new TableColumn($defs, $this);
+        foreach ($columns as $key => $options) {
+            $this->addColumn($key, $options);
         }
 
         return $this;
+    }
+
+    public function addColumn($key, $options)
+    {
+        if (!is_array($options)) {
+            $label = $options;
+        } else {
+            $label = isset($options['label']) ? $options['label'] : null;
+        }
+
+        if (!is_null($label)) {
+            $this->getHeader()->setLabel($key, $label);
+        }
+
+        $this->columns[$key] = new TableColumn($options, $this);
     }
 
     public function setIndexes($indexes) {
