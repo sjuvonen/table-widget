@@ -42,10 +42,6 @@ class Table {
      * Renders the table as HTML
      */
     public function render() {
-        $row_helper = new TableRow($this);
-        $row_helper->before($this->before);
-        $row_helper->after($this->after);
-
         $id = $this->id ? " id=\"{$this->id}\"" : '';
         $class = count($this->classes) ? ' class="' . implode(' ', $this->classes) . '"' : '';
         ?>
@@ -357,12 +353,12 @@ class Table {
 
     protected function renderRows()
     {
-        $row_helper = new TableRow($this);
-        $row_helper->before($this->before);
-        $row_helper->after($this->after);
         $data = $this->getData();
         if (count($data) > 0) {
             foreach ($this->getData() as $i => $row) {
+                $row_helper = new TableRow($this);
+                $row_helper->before($this->before);
+                $row_helper->after($this->after);
                 $row_helper->render($this->extractData($row), $i);
             }
         } else {

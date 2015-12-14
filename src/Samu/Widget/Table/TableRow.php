@@ -22,7 +22,7 @@ class TableRow extends TablePrimitive {
         }
 
         ?>
-        <tr>
+        <tr<?= $this->attributes() ?>>
             <?php foreach ($this->getTable()->getColumns() as $i => $col): ?>
                 <?= $col->render(isset($row[$i]) ? $row[$i] : null, $i, $row_i, $row) ?>
             <?php endforeach ?>
@@ -35,7 +35,7 @@ class TableRow extends TablePrimitive {
      *
      * @return TableRow
      **/
-    public function before($callback) {
+    public function before(callable $callback) {
         if (!is_null($callback) && !is_callable($callback)) {
             throw new \Exception('Invalid callback passed');
         }

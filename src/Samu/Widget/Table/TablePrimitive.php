@@ -77,4 +77,21 @@ abstract class TablePrimitive {
     protected function setAttribute($name, $value) {
         $this->attrs[$name] = $value;
     }
+
+    protected function getAttributes()
+    {
+        return $this->attrs;
+    }
+
+    public function attributes()
+    {
+        $attrs = '';
+        foreach ($this->getAttributes() as $name => $value) {
+            if (is_array($value)) {
+                $value = implode(' ', $value);
+            }
+            $attrs .= sprintf(' %s="%s"', htmlspecialchars($name), htmlspecialchars($value, ENT_QUOTES | ENT_HTML5));
+        }
+        return $attrs;
+    }
 }
