@@ -35,7 +35,7 @@ class TableRow extends TablePrimitive {
      *
      * @return TableRow
      **/
-    public function before(callable $callback) {
+    public function before($callback) {
         if (!is_null($callback) && !is_callable($callback)) {
             throw new \Exception('Invalid callback passed');
         }
