@@ -2,7 +2,7 @@
 
 namespace Samu\Zend\Table;
 
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 use Samu\Widget\Table\Table as BaseTable;
 
 /**
